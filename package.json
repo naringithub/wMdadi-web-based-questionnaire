@@ -1,0 +1,14 @@
+{
+  "name": "web-based-questionnaire",
+  "version": "1.0.0",
+  "description": "Web-Based Questionnaire with Auto-Calculation",
+  "scripts": {
+    "build": "npm run minify-js && npm run minify-css",
+    "minify-js": "uglifyjs app.js questionnaire_structure.js -o dist/bundle.min.js -c -m",
+    "minify-css": "cleancss -o dist/styles.min.css styles.css"
+  },
+  "devDependencies": {
+    "clean-css-cli": "^5.6.2",
+    "uglify-js": "^3.17.4"
+  }
+} 

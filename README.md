@@ -1,58 +1,47 @@
-# แบบประเมินภาวะกลืนลำบาก ของสถาบัน M (Web-based Dysphagia Assessment Questionnaire)
+# Web-Based Questionnaire with Auto-Calculation
 
-## คำอธิบาย
-แอปพลิเคชันเว็บสำหรับการประเมินภาวะกลืนลำบากตามแบบประเมิน M.D. Anderson Dysphagia Inventory (MDADI) ในรูปแบบภาษาไทย พร้อมคุณสมบัติพิเศษเพื่อการใช้งานที่สะดวกและมีประสิทธิภาพ
+A web-based implementation of the M.D. Anderson Dysphagia Inventory (MDADI) questionnaire with automatic scoring calculation.
 
-## คุณสมบัติหลัก
-1. **ข้อความภาษาไทย** - ใช้ข้อความภาษาไทยตามที่ปรากฏในเอกสาร PDF ต้นฉบับ
-2. **ฟังก์ชันอ่านออกเสียง** - สามารถกดปุ่มเพื่อฟังคำถามได้
-3. **การเลือกคำตอบด้วยปุ่มตัวเลข** - ผู้ป่วยสามารถเลือกคำตอบโดยกดปุ่มหมายเลข 1-5
-4. **การป้อนข้อมูลด้วยเสียง** - ผู้ป่วยสามารถพูดหมายเลข 1-5 เพื่อเลือกคำตอบได้
-5. **การคำนวณคะแนนอัตโนมัติ** - คำนวณคะแนนตามระบบการให้คะแนนมาตรฐาน MDADI
-6. **การบันทึกข้อมูล** - สามารถบันทึกความคืบหน้าเพื่อกลับมาทำต่อในภายหลังได้
-7. **การแสดงผลลัพธ์** - แสดงผลการประเมินในรูปแบบที่เข้าใจง่าย พร้อมการแปลผล
-8. **การรองรับอุปกรณ์มือถือ** - ออกแบบให้ใช้งานได้ทั้งบนคอมพิวเตอร์และอุปกรณ์มือถือ
+## Features
 
-## วิธีการใช้งาน
+- Interactive questionnaire with 20 items
+- Real-time progress tracking
+- Automatic score calculation
+- Voice input support
+- Save and resume functionality
+- Multilingual support (Thai/English)
+- Responsive design for all devices
+- Accessibility features
 
-### การติดตั้ง
-1. แตกไฟล์ `dysphagia_assessment_web.zip`
-2. เปิดไฟล์ `index.html` ในเว็บเบราว์เซอร์
+## Setup
 
-### การเริ่มใช้งาน
-1. กดปุ่ม "เริ่มทำแบบประเมิน" บนหน้าแรก
-2. อ่านคำถามและกดปุ่ม 🔊 เพื่อฟังคำถาม (ถ้าต้องการ)
-3. เลือกคำตอบโดยกดปุ่มหมายเลข 1-5 หรือกดปุ่มไมโครโฟนและพูดหมายเลข
-4. ใช้ปุ่ม "ก่อนหน้า" และ "ถัดไป" เพื่อเลื่อนระหว่างคำถาม
-5. กดปุ่ม "บันทึกความคืบหน้า" หากต้องการบันทึกและกลับมาทำต่อในภายหลัง
-6. เมื่อตอบครบทุกข้อ ระบบจะแสดงผลการประเมินโดยอัตโนมัติ
+1. Clone the repository:
+```bash
+git clone [your-repo-url]
+cd web-based-questionnaire
+```
 
-### การดูผลการประเมิน
-1. หน้าผลการประเมินจะแสดงคะแนนในแต่ละด้าน:
-   - ด้านอารมณ์และความรู้สึก (Emotional)
-   - ด้านการทำหน้าที่ (Functional)
-   - ด้านร่างกาย (Physical)
-   - คะแนนโดยรวม (Global)
-   - คะแนนรวมทั้งหมด (Composite)
-2. แต่ละคะแนนจะมีการแปลผลตามเกณฑ์มาตรฐาน
-3. สามารถบันทึกผลการประเมินหรือพิมพ์ได้
+2. Install dependencies:
+```bash
+npm install
+```
 
-### การโหลดแบบประเมินที่บันทึกไว้
-1. กดปุ่ม "โหลดแบบประเมินที่บันทึกไว้" ที่ด้านล่างของหน้า
-2. เลือกแบบประเมินที่ต้องการจากรายการ
+3. Build for production:
+```bash
+npm run build
+```
 
-## ข้อกำหนดทางเทคนิค
-- เว็บเบราว์เซอร์ที่รองรับ: Chrome, Firefox, Safari, Edge รุ่นล่าสุด
-- ต้องเปิดใช้งาน JavaScript
-- สำหรับฟังก์ชันอ่านออกเสียงและการป้อนข้อมูลด้วยเสียง ต้องใช้เบราว์เซอร์ที่รองรับ Web Speech API
-- การบันทึกข้อมูลใช้ Local Storage ของเบราว์เซอร์
+## Development
 
-## การปรับแต่งเพิ่มเติม
-หากต้องการปรับแต่งแบบประเมิน สามารถแก้ไขไฟล์ต่อไปนี้:
-- `questionnaire_structure.js` - สำหรับแก้ไขโครงสร้างคำถามและระบบการให้คะแนน
-- `styles.css` - สำหรับปรับแต่งรูปลักษณ์
-- `app.js` - สำหรับปรับแต่งฟังก์ชันการทำงาน
-- `index.html` - สำหรับแก้ไขโครงสร้าง HTML
+- `app.js` - Main application logic
+- `questionnaire_structure.js` - Questionnaire data and scoring logic
+- `styles.css` - Styling and responsive design
+- `index.html` - Main HTML structure
 
-## หมายเหตุ
-แบบประเมินนี้เป็นฉบับแปลและดัดแปลงจาก The M.D. Anderson Dysphagia Inventory (MDADI) สำหรับใช้ในการประเมินภาวะกลืนลำบากในผู้ป่วย
+## Deployment
+
+This project is configured for deployment on Netlify. Simply connect your GitHub repository to Netlify for automatic deployments.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
