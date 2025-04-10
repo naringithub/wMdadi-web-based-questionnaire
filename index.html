@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แบบประเมินภาวะกลืนลำบาก ของสถาบัน M</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>แบบประเมินภาวะกลืนลำบาก ของสถาบัน M</h1>
+            <h2>M.D. Anderson Dysphagia Inventory (MDADI)</h2>
+        </header>
+
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress" id="progress-bar"></div>
+            </div>
+            <div class="progress-text" id="progress-text">ส่วนที่ 1 จาก 4</div>
+        </div>
+
+        <main id="questionnaire-container">
+            <!-- Initial welcome screen -->
+            <div id="welcome-screen" class="screen active">
+                <h2>ยินดีต้อนรับสู่แบบประเมินภาวะกลืนลำบาก</h2>
+                <p>แบบประเมินนี้ช่วยในการประเมินผลกระทบของภาวะกลืนลำบากต่อคุณภาพชีวิตของท่าน</p>
+                <p>คำแนะนำ:</p>
+                <ul>
+                    <li>แบบประเมินประกอบด้วยคำถามทั้งหมด 20 ข้อ</li>
+                    <li>กดปุ่ม 🔊 เพื่อฟังคำถาม</li>
+                    <li>เลือกคำตอบโดยกดปุ่มหมายเลข 1-5 หรือพูดหมายเลข</li>
+                    <li>ท่านสามารถบันทึกคำตอบเพื่อกลับมาทำต่อในภายหลังได้</li>
+                </ul>
+                <button id="start-btn" class="btn btn-primary">เริ่มทำแบบประเมิน</button>
+            </div>
+
+            <!-- Question template (will be populated by JavaScript) -->
+            <div id="question-screen" class="screen">
+                <div class="section-title" id="section-title"></div>
+                <div class="question-container">
+                    <div class="question-text" id="question-text"></div>
+                    <button class="read-aloud-btn" id="read-aloud-btn" aria-label="อ่านคำถาม">🔊</button>
+                </div>
+                
+                <div class="response-options">
+                    <div class="option-buttons">
+                        <button class="option-btn" data-value="1">1</button>
+                        <button class="option-btn" data-value="2">2</button>
+                        <button class="option-btn" data-value="3">3</button>
+                        <button class="option-btn" data-value="4">4</button>
+                        <button class="option-btn" data-value="5">5</button>
+                    </div>
+                    <div class="option-labels">
+                        <div class="option-label">เห็นด้วยอย่างยิ่ง</div>
+                        <div class="option-label">เห็นด้วย</div>
+                        <div class="option-label">ไม่มีความเห็น</div>
+                        <div class="option-label">ไม่เห็นด้วย</div>
+                        <div class="option-label">ไม่เห็นด้วยอย่างยิ่ง</div>
+                    </div>
+                </div>
+
+                <div class="voice-input">
+                    <button id="voice-input-btn" class="btn btn-secondary">
+                        <span class="microphone-icon">🎤</span> พูดหมายเลข 1-5
+                    </button>
+                    <div id="voice-status"></div>
+                </div>
+
+                <div class="navigation-buttons">
+                    <button id="prev-btn" class="btn btn-secondary">ก่อนหน้า</button>
+                    <button id="next-btn" class="btn btn-primary">ถัดไป</button>
+                </div>
+
+                <button id="save-progress-btn" class="btn btn-save">บันทึกความคืบหน้า</button>
+            </div>
+
+            <!-- Results screen -->
+            <div id="results-screen" class="screen">
+                <h2>ผลการประเมิน</h2>
+                
+                <div class="results-container">
+                    <div class="score-summary">
+                        <h3>คะแนนรวม</h3>
+                        <div class="score-box" id="composite-score"></div>
+                        <div class="score-interpretation" id="composite-interpretation"></div>
+                    </div>
+
+                    <div class="score-details">
+                        <div class="score-section">
+                            <h4>ด้านอารมณ์และความรู้สึก (Emotional)</h4>
+                            <div class="score-value" id="emotional-score"></div>
+                            <div class="score-bar">
+                                <div class="score-fill" id="emotional-bar"></div>
+                            </div>
+                            <div class="score-interpretation" id="emotional-interpretation"></div>
+                        </div>
+
+                        <div class="score-section">
+                            <h4>ด้านการทําหน้าที่ (Functional)</h4>
+                            <div class="score-value" id="functional-score"></div>
+                            <div class="score-bar">
+                                <div class="score-fill" id="functional-bar"></div>
+                            </div>
+                            <div class="score-interpretation" id="functional-interpretation"></div>
+                        </div>
+
+                        <div class="score-section">
+                            <h4>ด้านร่างกาย (Physical)</h4>
+                            <div class="score-value" id="physical-score"></div>
+                            <div class="score-bar">
+                                <div class="score-fill" id="physical-bar"></div>
+                            </div>
+                            <div class="score-interpretation" id="physical-interpretation"></div>
+                        </div>
+
+                        <div class="score-section">
+                            <h4>คะแนนโดยรวม (Global)</h4>
+                            <div class="score-value" id="global-score"></div>
+                            <div class="score-bar">
+                                <div class="score-fill" id="global-bar"></div>
+                            </div>
+                            <div class="score-interpretation" id="global-interpretation"></div>
+                        </div>
+                    </div>
+
+                    <div class="clinical-issues">
+                        <h3>ประเด็นทางคลินิกที่ตรวจพบ</h3>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="issue-1" name="clinical-issues">
+                                <label for="issue-1">การไอ/ สําลักบ่อยครั้ง</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="issue-2" name="clinical-issues">
+                                <label for="issue-2">นํ้าหนักลดผิดปกติ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="issue-3" name="clinical-issues">
+                                <label for="issue-3">อาการเจ็บขณะกลืน</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="issue-4" name="clinical-issues">
+                                <label for="issue-4">อื่นๆ</label>
+                                <input type="text" id="other-issue" placeholder="ระบุ">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="notes-section">
+                        <h3>บันทึกเพิ่มเติม</h3>
+                        <textarea id="notes" rows="4" placeholder="บันทึกเหตุการณ์ไม่พึงประสงค์หรือข้อสังเกตเพิ่มเติม"></textarea>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button id="save-results-btn" class="btn btn-primary">บันทึกผลการประเมิน</button>
+                    <button id="print-results-btn" class="btn btn-secondary">พิมพ์ผลการประเมิน</button>
+                    <button id="restart-btn" class="btn btn-secondary">เริ่มการประเมินใหม่</button>
+                </div>
+            </div>
+
+            <!-- Load saved session screen -->
+            <div id="load-screen" class="screen">
+                <h2>โหลดแบบประเมินที่บันทึกไว้</h2>
+                <div class="saved-sessions" id="saved-sessions-list">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+                <div class="action-buttons">
+                    <button id="back-to-welcome-btn" class="btn btn-secondary">กลับไปหน้าแรก</button>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>แบบประเมินนี้เป็นฉบับแปลและดัดแปลงจาก The M.D. Anderson Dysphagia Inventory (MDADI)</p>
+            <div class="footer-buttons">
+                <button id="load-session-btn" class="btn btn-link">โหลดแบบประเมินที่บันทึกไว้</button>
+                <button id="about-btn" class="btn btn-link">เกี่ยวกับแบบประเมิน</button>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Modal for saving progress -->
+    <div id="save-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3>บันทึกความคืบหน้า</h3>
+            <p>กรุณาตั้งชื่อสำหรับการบันทึกนี้:</p>
+            <input type="text" id="save-name" placeholder="ชื่อการบันทึก">
+            <div class="modal-buttons">
+                <button id="confirm-save-btn" class="btn btn-primary">บันทึก</button>
+                <button id="cancel-save-btn" class="btn btn-secondary">ยกเลิก</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="questionnaire_structure.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
